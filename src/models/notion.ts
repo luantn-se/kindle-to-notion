@@ -9,7 +9,7 @@ import {
   makeBlocks,
 } from "../utils";
 
- 
+
 async function createNewbookHighlights(title: string, author: string, highlights: string[],  notionInstance: NotionAdapter) {
   const createPageParams: CreatePageParams = {
     parentDatabaseId: process.env.BOOK_DB_ID as string,
@@ -41,7 +41,7 @@ export class Notion {
       filter: {
         or: [
           {
-            property: "Book Name",
+            property: "title",
             text: {
               equals: bookName,
             },
@@ -72,7 +72,7 @@ export class Notion {
           if (bookId) {
             console.log(`📚 Book already present, appending highlights`);
             // append unsynced highlights at the end of the page
-            
+
             if(book.highlights.length <= 100) {
               await this.notion.appendBlockChildren(
                 bookId,
@@ -89,7 +89,7 @@ export class Notion {
                 highlightsTracker+=99;
               }
             }
-            
+
           } else {
             console.log(`📚 Book not present, creating notion page`);
             if(book.highlights.length <= 100) {
@@ -107,7 +107,7 @@ export class Notion {
                   let newBookId = await this.getIdFromBookName(book.title);
                   if(newBookId) {
                     await this.notion.appendBlockChildren(
-                      newBookId, 
+                      newBookId,
                       makeBlocks(book.highlights.slice(highlightsTracker, highlightsTracker+99), BlockType.quote)
                     );
                     highlightsTracker += 99;
@@ -116,7 +116,7 @@ export class Notion {
               }
             }
           }
-            
+
           // after each book is successfully synced, update the sync metadata (cache)
           updateSync(book);
         }
