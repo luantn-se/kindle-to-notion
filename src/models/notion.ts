@@ -1,3 +1,5 @@
+import { createApi } from "unsplash-js";
+
 require("dotenv").config();
 
 import { NotionAdapter } from "../adapters";
@@ -9,9 +11,11 @@ import {
   getUnsyncedHighlights,
   makeBlocks,
 } from "../utils";
+import * as nodeFetch from "node-fetch";
 
 
 async function createNewbookHighlights(title: string, author: string, highlights: string[],  notionInstance: NotionAdapter) {
+  await sleep(400);
   const createPageParams: CreatePageParams = {
     parentDatabaseId: process.env.BOOK_DB_ID as string,
     properties: {
@@ -21,11 +25,28 @@ async function createNewbookHighlights(title: string, author: string, highlights
     },
     children: makeHighlightsBlocks(highlights, BlockType.quote),
     icon: Emoji["🔖"],
-    cover: 'https://thecatapi.com/api/images/get?format=src&type=png'
+    cover: await getRandomImage()
   }
   await notionInstance.createPage(createPageParams);
 }
 
+async function getRandomImage(): Promise<string> {
+  const unsplash = createApi({
+    accessKey: 'CB2oyAAohZBWGDSq9CSgz37bT0v56ZN5TXajB57J8sU',
+    fetch: nodeFetch.default as unknown as typeof fetch,
+  });
+
+  const dataRes = await unsplash.photos.getRandom({query: 'sexy girl'});
+  let cover = 'https://thecatapi.com/api/images/get?format=src&type=png';
+  if (dataRes.type === 'success') {
+    // @ts-ignore
+    cover = dataRes.response.urls.full;
+  }
+
+  return cover;
+}
+
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 export class Notion {
   private notion;
 
