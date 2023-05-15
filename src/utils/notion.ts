@@ -28,7 +28,7 @@ export const makeBlocks = (highlights: string[], type: BlockType): Block[] => {
   return blocks;
 };
 
-/* Function to make an array of Notion blocks with a title: " 🎀 Highlights". 
+/* Function to make an array of Notion blocks with a title: " 🎀 Highlights".
    Used when creating a new Notion page for the book*/
 export const makeHighlightsBlocks = (
   highlights: string[],
@@ -65,17 +65,17 @@ export const makePageProperties = (
         },
       ],
     },
-    "Book Name": {
-      type: "rich_text",
-      rich_text: [
-        {
-          type: "text",
-          text: {
-            content: pageProperties.bookName,
-          },
-        },
-      ],
-    },
+    // BookName: {
+    //   type: "rich_text",
+    //   rich_text: [
+    //     {
+    //       type: "text",
+    //       text: {
+    //         content: pageProperties.bookName,
+    //       },
+    //     },
+    //   ],
+    // },
   };
   return properties;
 };
