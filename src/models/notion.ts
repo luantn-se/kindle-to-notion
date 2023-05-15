@@ -1,4 +1,5 @@
 require("dotenv").config();
+
 import { NotionAdapter } from "../adapters";
 import { GroupedClipping } from "../interfaces";
 import { CreatePageParams, Emoji, BlockType } from "../interfaces";
@@ -20,6 +21,7 @@ async function createNewbookHighlights(title: string, author: string, highlights
     },
     children: makeHighlightsBlocks(highlights, BlockType.quote),
     icon: Emoji["🔖"],
+    cover: 'https://thecatapi.com/api/images/get?format=src&type=png'
   }
   await notionInstance.createPage(createPageParams);
 }
