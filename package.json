@@ -2,7 +2,8 @@
   "scripts": {
     "start": "node dist/main.js",
     "build": "tsc",
-    "dev": "tsc -w & nodemon -q -w dist dist/main.js"
+    "dev": "tsc -w & nodemon -q -w dist dist/main.js",
+    "copy": "cp \"/Volumes/Kindle/documents/My Clippings.txt\" ~/var/service/kindle-to-notion/resources"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
