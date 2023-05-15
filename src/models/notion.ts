@@ -15,7 +15,6 @@ import * as nodeFetch from "node-fetch";
 
 
 async function createNewbookHighlights(title: string, author: string, highlights: string[],  notionInstance: NotionAdapter) {
-  await sleep(400);
   const createPageParams: CreatePageParams = {
     parentDatabaseId: process.env.BOOK_DB_ID as string,
     properties: {
@@ -28,15 +27,16 @@ async function createNewbookHighlights(title: string, author: string, highlights
     cover: await getRandomImage()
   }
   await notionInstance.createPage(createPageParams);
+  await sleep(400);
 }
 
-async function getRandomImage(): Promise<string> {
+async function getRandomImage(query: string = 'sexy girl'): Promise<string> {
   const unsplash = createApi({
     accessKey: 'CB2oyAAohZBWGDSq9CSgz37bT0v56ZN5TXajB57J8sU',
     fetch: nodeFetch.default as unknown as typeof fetch,
   });
 
-  const dataRes = await unsplash.photos.getRandom({query: 'sexy girl'});
+  const dataRes = await unsplash.photos.getRandom({query: query});
   let cover = 'https://thecatapi.com/api/images/get?format=src&type=png';
   if (dataRes.type === 'success') {
     // @ts-ignore
