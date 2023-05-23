@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "node dist/main.js",
+    "start": "yarn copy & node dist/main.js",
     "build": "tsc",
     "dev": "tsc -w & nodemon -q -w dist dist/main.js",
     "copy": "cp \"/Volumes/Kindle/documents/My Clippings.txt\" ~/var/service/kindle-to-notion/resources"
